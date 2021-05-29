@@ -31,6 +31,12 @@ card_names:
             Scottish: 1
             Welsh: 1
         swap: nothing
+    English support:
+        type: followers
+        adjacent: "English"
+        place:
+            English: 2
+        swap: nothing
     Manoeuvre:
         type: followers
         adjacent: false

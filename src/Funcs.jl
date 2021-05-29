@@ -22,13 +22,27 @@ function initialise_player_courts!(players::Array{Player}, board::Board)
 end
 
 function initialise_board!(board::Board)
-    # First put followers in home bases
+    # First make the players' courts
+    for player in board.players
+        while player.court_size < court_size
+            pick = random_pick_from_supply(board)
+            player.court[pick] += 1
+            player.court_size += 1
+            board.supply[pick] -= 1
+        end
+    end
+    # Then put followers in home bases
     for region in board.regions
         for (f, starting_region) in faction_names
             if region.name == starting_region
                 region.followers[f] += 2
                 region.size = 2
                 board.supply[f] -= 2 # Reduce the supply
+                for r in board.unresolved_regions
+                    if r.name == starting_region
+                        r.controller = f
+                    end
+                end
             end
         end
     end
@@ -79,8 +93,9 @@ function resolve_board!(board::Board)
     end
 end
 
-function evaluate_current_board(board::Board, player::Player)
+function evaluate_current_board(board::Board)
     evaluation = 0
+    player = board.players[board.turn]
     for r in board.resolved_regions
         evaluation += get(player.court, r.controller,
                         minimum([v for (k,v) in player.court]))
@@ -88,7 +103,13 @@ function evaluate_current_board(board::Board, player::Player)
     evaluation
 end
 
-function take_follower!(board::Board, player::Player, region::String,
+function evaluate_resolved_board(board::Board)
+    board_copy = deepcopy(board)
+    resolve_board!(board_copy)
+    evaluate_current_board(board_copy)
+end
+
+function take_follower!(board::Board, region::String,
                         faction::String)
     for r in board.unresolved_regions
         if r.name == region
@@ -98,8 +119,8 @@ function take_follower!(board::Board, player::Player, region::String,
             end
             r.followers[faction] -= 1
             r.size -= 1
-            player.court[faction] += 1
-            player.court_size += 1
+            board.players[board.turn].court[faction] += 1
+            board.players[board.turn].court_size += 1
         end
     end
 end
@@ -113,8 +134,9 @@ function place_follower!(board::Board, region::String, faction::String)
     for r in board.unresolved_regions
         if r.name == region
             if board.supply[faction] == 0
-                error("Trying to take a follower from the supply when that faction is not present\n",
+                prinln("Trying to take a follower from the supply when that faction is not present\n",
                 "Tried to take a(n) ", faction, " follower from the supply")
+                break
             end
             r.followers[faction] += 1
             r.size += 1
