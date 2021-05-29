@@ -1,0 +1,49 @@
+# Inputs for The King is Dead
+
+# Names of each faction and their homebase
+faction_names:
+    English: Essex
+    Welsh: Gwynedd
+    Scottish: Moray
+
+# Names of each region and the adjacent regions
+region_names:
+    Warwick:
+        - Gwynedd
+        - Devon
+        - Essex
+        - Lancaster
+        - Northumbria
+    Northumbria:
+        - Essex
+        - Warwick
+        - Strathclyde
+        - Lancaster
+    Essex:
+        - Devon
+        - Warwick
+        - Northumbria
+    Devon:
+        - Essex
+        - Gwynedd
+        - Warwick
+    Gwynedd:
+        - Devon
+        - Warwick
+        - Lancaster
+    Moray:
+        - Strathclyde
+    Lancaster:
+        - Gwynedd
+        - Warwick
+        - Northumbria
+        - Strathclyde
+    Strathclyde:
+        - Moray
+        - Lancaster
+        - Northumbria
+
+# Names of each player, in turn order
+player_names:
+    - Player 1
+    - Player 2
