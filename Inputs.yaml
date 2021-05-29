@@ -50,11 +50,50 @@ player_names:
 
 # Names of cards each player has
 card_names:
-    - Assemble
-    - Assemble
-    - Manoeuvre
-    - Outmanoeuvre
-    - English support
-    - Welsh support
-    - Scottish support
-    - Negotiate
+    Assemble:
+        type: followers
+        adjacent: false
+        place:
+            English: 1
+            Scottish: 1
+            Welsh: 1
+        swap: nothing
+    English support:
+        type: followers
+        adjacent: "English"
+        place:
+            English: 2
+        swap: nothing
+    Welsh support:
+        type: followers
+        adjacent: "Welsh"
+        place:
+            Welsh: 2
+        swap: nothing
+    Scottish support:
+        type: followers
+        adjacent: "Scottish"
+        place:
+            Scottish: 2
+        swap: nothing
+    Manoeuvre:
+        type: followers
+        adjacent: false
+        place: nothing
+        swap:
+            origin: 1
+            destination: 1
+    Outmanoeuvre:
+        type: followers
+        adjacent: true
+        place: nothing
+        swap:
+            origin: 2
+            destination: 1
+    Negotiate:
+        type: cards
+        adjacent: false
+        place: nothing
+        swap:
+            origin: 1
+            destination: 1
