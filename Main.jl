@@ -49,13 +49,6 @@ board = Board(regions, supply)
 initialise_board!(board, supply)
 
 println(board)
-
-
-function evaluate_current_board(board::Board, player::Player)
-    evaluation = 0
-    for r in board.resolved_regions
-        evaluation += get(player.court, r.controller,
-                        minimum([v for (k,v) in player.court]))
-    end
-    evaluation
-end
+println(board.supply)
+resolve_region!(board, "Essex")
+println(board.supply)

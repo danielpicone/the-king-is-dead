@@ -20,3 +20,9 @@ region_names:
 player_names:
     - Player 1
     - Player 2
+
+# Names of cards each player has
+card_names:
+    - Assemble
+    - Manoeuvre
+    - Outmanoeuvre
