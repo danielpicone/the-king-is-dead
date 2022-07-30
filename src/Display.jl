@@ -59,13 +59,33 @@ Base.show(io::IO, p::Player) = begin
     print(p.name, " has ")
     for (i, (f_name, f_num)) in enumerate(p.court)
         if (i == length(p.court))
-            println(f_num, " ", f_name, " followers.")
+            print(f_num, " ", f_name, " followers.")
         else
             print(f_num, " ", f_name, ", ")
         end
     end
 end
 
+Base.show(io::IO, region::Region) = print(region.name)
+
+Base.print(io::IO, region::Region) = begin
+    println(region.name)
+    println(region.followers)
+    print("Neighbouring regions: ")
+    for (i, str) in enumerate(region.adjacent)
+        if (i == length(region.adjacent))
+            print(str)
+        else
+            print(str, ", ")
+        end
+    end
+    println()
+end
+
 Base.show(io::IO, ps::Array{Player}) = begin
     [Base.show(p) for p in ps]
+end
+
+Base.show(io::IO, tup::Tuple{Tuple{Region, String}, Tuple{Region, String}}) = begin
+    print("(", tup[1][1].name, ", ", tup[1][2],"), (", tup[2][1].name, ", ", tup[2][2], ")")
 end
